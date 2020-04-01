@@ -1,0 +1,9 @@
+[submodule "uvrobot/src/pwm_motor/lib/Adafruit_Sensor"]
+	path = uvrobot/src/pwm_motor/lib/Adafruit_Sensor
+	url = git@github.com:adafruit/Adafruit_Sensor.git
+[submodule "uvrobot/src/pwm_motor/lib/Adafruit_BNO055"]
+	path = uvrobot/src/pwm_motor/lib/Adafruit_BNO055
+	url = git@github.com:adafruit/Adafruit_BNO055.git
+[submodule "uvrobot/src/pwm_motor/lib/TimerOne"]
+	path = uvrobot/src/pwm_motor/lib/TimerOne
+	url = git@github.com:PaulStoffregen/TimerOne.git
