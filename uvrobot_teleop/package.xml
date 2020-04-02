@@ -1,18 +1,16 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>turtlebot3_teleop</name>
+  <name>uvcrobot_teleop</name>
   <version>1.2.1</version>
   <description>
-    Provides teleoperation using keyboard for TurtleBot3.
+    Provides teleoperation using keyboard for uvcrobot.
   </description>
   <license>BSD</license>
   <author>Melonee Wise</author>
-  <author email="thlim@robotis.com">Darby Lim</author>
-  <maintainer email="pyo@robotis.com">Pyo</maintainer>
-  <url type="website">http://wiki.ros.org/turtlebot3_teleop</url>
-  <url type="emanual">http://turtlebot3.robotis.com</url>
-  <url type="repository">https://github.com/ROBOTIS-GIT/turtlebot3</url>
-  <url type="bugtracker">https://github.com/ROBOTIS-GIT/turtlebot3/issues</url>
+  <author email="jefersonjl82@gmail.com">Jeferson Lima</author>
+  <maintainer email="jefersonjl82@gmail.com">Jeferson Lima</maintainer>
+  <url type="repository">https://gitlab.com/jeferson.lima/uvc_robot</url>
+  <url type="bugtracker">https://gitlab.com/jeferson.lima/uvc_robot/issues</url>
   <buildtool_depend>catkin</buildtool_depend>
   <depend>rospy</depend>
   <depend>geometry_msgs</depend>
