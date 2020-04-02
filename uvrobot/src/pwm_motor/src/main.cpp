@@ -28,34 +28,35 @@ const int PIN_R_IN3 = 7;
 const int PIN_R_IN4 = 8;
 const int PIN_R_PWM = 9;
 
+
 ros::NodeHandle nh;
 int reverse = 0;
 float throttle = 0; 
 float angle = 0; 
+
+void ControlRightMotor(uint8_t dir, uint8_t pwn);
+void ControlLeftMotor(uint8_t dir, uint8_t pwn);
 
 void cmdVelCB( const geometry_msgs::Twist& twist)
 {
   throttle = twist.linear.x; 
   angle = twist.angular.z; 
 
-  if (twist.linear.x <= 0 && reverse == 0)
+  if (twist.linear.x <= 0)
   {
-
-  }
-  else if (twist.linear.x <= 0 && reverse > 0)
-  {
-  
+    ControlRightMotor(FORWARD, (uint8_t)abs(throttle));
+    ControlLeftMotor(FORWARD, (uint8_t)abs(throttle));
   }
   else if (twist.linear.x > 0){
-
-    reverse = 0;
+    ControlRightMotor(REVERSE, (uint8_t)throttle);
+    ControlLeftMotor(REVERSE, (uint8_t)throttle);
   }
   #ifdef DEBUG
     Serial.println(throttle);
   #endif
 }
 
-ros::Subscriber<geometry_msgs::Twist> subCmdVel("/uvc-robots/cmd_vel", cmdVelCB);
+ros::Subscriber<geometry_msgs::Twist> subCmdVel("/uvcrobots/cmd_vel", cmdVelCB);
 
 //PWM TEST
 int count = 0;
@@ -129,6 +130,7 @@ void setup()
   pinMode(PIN_R_PWM, OUTPUT);
   pinMode(PIN_R_IN3, OUTPUT);
   pinMode(PIN_R_IN4, OUTPUT);
+  pinMode(LED_BUILTIN, OUTPUT);
   
   #ifndef DEBUG
     nh.initNode();
