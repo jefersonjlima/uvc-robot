@@ -35,13 +35,11 @@ if os.name == 'nt':
 else:
   import tty, termios
 
-BURGER_MAX_LIN_VEL = 0.22
+# TODO: Change it to velocity, now it is a pwm range
+UVCROBOT_MAX_LIN_VEL = 250.0
 BURGER_MAX_ANG_VEL = 2.84
 
-WAFFLE_MAX_LIN_VEL = 0.26
-WAFFLE_MAX_ANG_VEL = 1.82
-
-LIN_VEL_STEP_SIZE = 0.01
+LIN_VEL_STEP_SIZE =5.0
 ANG_VEL_STEP_SIZE = 0.1
 
 msg = """
@@ -52,8 +50,6 @@ Moving around:
    a    s    d
         x
 
-w/x : increase/decrease linear velocity (Burger : ~ 0.22, Waffle and Waffle Pi : ~ 0.26)
-a/d : increase/decrease angular velocity (Burger : ~ 2.84, Waffle and Waffle Pi : ~ 1.82)
 
 space key, s : force stop
 
@@ -102,22 +98,12 @@ def constrain(input, low, high):
     return input
 
 def checkLinearLimitVelocity(vel):
-    if uvcrobot_model == "burger":
-      vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
-    elif uvcrobot_model == "waffle" or uvcrobot_model == "waffle_pi":
-      vel = constrain(vel, -WAFFLE_MAX_LIN_VEL, WAFFLE_MAX_LIN_VEL)
-    else:
-      vel = constrain(vel, -BURGER_MAX_LIN_VEL, BURGER_MAX_LIN_VEL)
+    vel = constrain(vel, -UVCROBOT_MAX_LIN_VEL, UVCROBOT_MAX_LIN_VEL)
 
     return vel
 
 def checkAngularLimitVelocity(vel):
-    if uvcrobot_model == "burger":
-      vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
-    elif uvcrobot_model == "waffle" or uvcrobot_model == "waffle_pi":
-      vel = constrain(vel, -WAFFLE_MAX_ANG_VEL, WAFFLE_MAX_ANG_VEL)
-    else:
-      vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+    vel = 0
 
     return vel
 
@@ -126,9 +112,7 @@ if __name__=="__main__":
         settings = termios.tcgetattr(sys.stdin)
 
     rospy.init_node('uvcrobot_teleop')
-    pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-
-    uvcrobot_model = rospy.get_param("model", "burger")
+    pub = rospy.Publisher('uvcrobot/cmd_vel', Twist, queue_size=10)
 
     status = 0
     target_linear_vel   = 0.0

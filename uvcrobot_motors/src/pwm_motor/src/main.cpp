@@ -56,7 +56,7 @@ void cmdVelCB( const geometry_msgs::Twist& twist)
   #endif
 }
 
-ros::Subscriber<geometry_msgs::Twist> subCmdVel("/uvcrobots/cmd_vel", cmdVelCB);
+ros::Subscriber<geometry_msgs::Twist> subCmdVel("/uvcrobot/cmd_vel", cmdVelCB);
 
 //PWM TEST
 int count = 0;
@@ -148,7 +148,7 @@ void loop()
 //Control function - Right Motors
 void ControlRightMotor(uint8_t dir, uint8_t pwn)
 {
-  if (dir == REVERSE)
+  if (dir == FORWARD)
   {
     digitalWrite(PIN_L_IN1, HIGH);
     digitalWrite(PIN_L_IN2, LOW);
@@ -164,7 +164,7 @@ void ControlRightMotor(uint8_t dir, uint8_t pwn)
 //Control function - Left Motors
 void ControlLeftMotor(uint8_t dir, uint8_t pwn)
 {
-  if (dir == REVERSE)
+  if (dir == FORWARD)
   {
     digitalWrite(PIN_R_IN3, LOW);
     digitalWrite(PIN_R_IN4, HIGH);
