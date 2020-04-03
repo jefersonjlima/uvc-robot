@@ -8,5 +8,7 @@ before_script:
 
 job:
   stage: build
-  script: "platformio run"
-  variables: {PLATFORMIO_CI_SRC: "/uvcrobot_motors/src/pwm_motor/src/main.cpp"}
+  script: 
+    - cd uvcrobot_hardware/pwm_motor/
+    - platformio run
+  variables: {PLATFORMIO_CI_SRC: "/src/main.cpp"}

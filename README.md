@@ -1,4 +1,4 @@
-# UvRobot
+# UVCRobot
 
 
 [![pipeline status](https://gitlab.com/jeferson.lima/uvc_robot/badges/master/pipeline.svg)](https://gitlab.com/jeferson.lima/uvc_robot/pipelines)
