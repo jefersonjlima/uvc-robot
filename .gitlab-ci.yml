@@ -1,0 +1,12 @@
+image: python:2.7
+
+stages:
+ - build
+
+before_script:
+  - "pip install -U platformio"
+
+job:
+  stage: build
+  script: "platformio run"
+  variables: {PLATFORMIO_CI_SRC: "/uvcrobot_motors/src/pwm_motor/src/main.cpp"}
