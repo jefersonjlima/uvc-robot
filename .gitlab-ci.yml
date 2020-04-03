@@ -1,13 +1,17 @@
 image: python:2.7
 
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
 stages:
- - build
+ - board_build
 
 before_script:
   - "pip install -U platformio"
 
 job:
-  stage: build
+  stage: board_build
   script: 
     - cd uvcrobot_hardware/pwm_motor/
     - platformio run
