@@ -1,11 +1,15 @@
 # UvRobot
 
-A proposta desse projeto é o desenovimento de um robô para desifecção de ambientes hospitares. O projeto como proposta de baixo custo é baseado em um dos produtos da empresa [UVD ROBOTS](http://www.uvd-robots.com/).
+## Overview
+
+The purpose of project is to develop UVC-light Disinfection Robot in a Hospital Environment. This Project was inspired by the [UVD ROBOTS](http://www.uvd-robots.com/).
 
 
-## Protótipo 1
+# Usage
+WIP
 
-![](./images/prototipe_1.png)
+# Simulation
+WIP
 
-
-
+# Bugs & Feature Requests
+Please report bugs and request features using the [issues](https://gitlab.com/jeferson.lima/uvc_robot/-/issues)
