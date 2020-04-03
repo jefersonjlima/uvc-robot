@@ -37,10 +37,10 @@ else:
 
 # TODO: Change it to velocity, now it is a pwm range
 UVCROBOT_MAX_LIN_VEL = 250.0
-BURGER_MAX_ANG_VEL = 2.84
+BURGER_MAX_ANG_VEL = 250.0
 
-LIN_VEL_STEP_SIZE =5.0
-ANG_VEL_STEP_SIZE = 0.1
+LIN_VEL_STEP_SIZE = 5.0
+ANG_VEL_STEP_SIZE = 5.0
 
 msg = """
 Control Your uvcrobot!
@@ -99,12 +99,12 @@ def constrain(input, low, high):
 
 def checkLinearLimitVelocity(vel):
     vel = constrain(vel, -UVCROBOT_MAX_LIN_VEL, UVCROBOT_MAX_LIN_VEL)
-
+    
     return vel
 
 def checkAngularLimitVelocity(vel):
-    vel = 0
-
+    vel = constrain(vel, -BURGER_MAX_ANG_VEL, BURGER_MAX_ANG_VEL)
+    
     return vel
 
 if __name__=="__main__":
@@ -124,7 +124,7 @@ if __name__=="__main__":
         print(msg)
         while(1):
             key = getKey()
-            if key == 'w' :
+            if  key == 'w' :
                 target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
                 status = status + 1
                 print(vels(target_linear_vel,target_angular_vel))

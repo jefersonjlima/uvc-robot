@@ -51,6 +51,7 @@ void cmdVelCB( const geometry_msgs::Twist& twist)
     ControlRightMotor(REVERSE, (uint8_t)throttle);
     ControlLeftMotor(REVERSE, (uint8_t)throttle);
   }
+
   #ifdef DEBUG
     Serial.println(throttle);
   #endif
