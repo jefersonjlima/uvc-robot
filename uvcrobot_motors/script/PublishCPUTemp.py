@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import Float32
-import Jetson.GPIO as GPIO
-BUTTON_GPIO = 16
 if __name__ == '__main__':
     rospy.init_node('cpu_temp_publisher')
     pub = rospy.Publisher('cpu_temperature', Float32, queue_size = 10)
