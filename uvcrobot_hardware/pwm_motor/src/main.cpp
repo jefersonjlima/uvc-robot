@@ -5,16 +5,17 @@
 #include <TimerOne.h>
 // ros libraries
 #include <ros.h>
-#include <geometry_msgs/Twist.h>
 #include <ros/time.h>
-#include <geometry_msgs/TransformStamped.h>
+#include <sensor_msgs/Imu.h>
+#include <geometry_msgs/Twist.h>
+
 // control
 #include "control.h"
 // #define DEBUG
 #define Adafruit_BNO055_ENABLE
 
 #ifdef Adafruit_BNO055_ENABLE
-  #define BNO055_SAMPLERATE_DELAY_MS (100)
+  #define BNO055_SAMPLERATE_DELAY_MS (20)
 #endif
 #define LOOPTIME 100
 #define FORWARD 1
@@ -42,13 +43,12 @@ void ControlLeftMotor(uint8_t dir, uint8_t pwn);
   void Adafruit_BNO055_Details(void);
 #endif
 ros::NodeHandle nh;
-void handle_cmd( const geometry_msgs::Twist& twist);
-
-ros::Subscriber<geometry_msgs::Twist> cmd_vel("uvcrobot/cmd_vel", handle_cmd);
 #ifdef Adafruit_BNO055_ENABLE
-  geometry_msgs::TransformStamped pose_msg;
-  ros::Publisher pub_pose("uvcrobot/imu", &pose_msg);
+  sensor_msgs::Imu imu_msg;
+  ros::Publisher imu_pub("uvcrobot/imu", &imu_msg);
 #endif
+void handle_cmd( const geometry_msgs::Twist& twist);
+ros::Subscriber<geometry_msgs::Twist> cmd_vel("uvcrobot/cmd_vel", handle_cmd);
 pid_controller pid_z;
 
 void ControlRightMotor(uint8_t dir, uint8_t pwn);
@@ -58,8 +58,12 @@ void ControlLeftMotor(uint8_t dir, uint8_t pwn);
 void setup()
 {
   #ifdef Adafruit_BNO055_ENABLE
-    Serial.begin(9600);
+    nh.initNode();
+    nh.getHardware()->setBaud(115200);
+    nh.advertise(imu_pub);
+    nh.subscribe(cmd_vel);
     #ifdef DEBUG
+      Serial.begin(9600);
       Serial.println("Orientation Sensor Test");
       Serial.println("");]
     #endif
@@ -94,13 +98,6 @@ void setup()
   pinMode(PIN_R_IN3, OUTPUT);
   pinMode(PIN_R_IN4, OUTPUT);
   pinMode(LED_BUILTIN, OUTPUT);
-  #ifndef DEBUG
-    nh.initNode();
-    #ifdef Adafruit_BNO055_ENABLE
-      nh.advertise(pub_pose);
-    #endif
-    nh.subscribe(cmd_vel);
-  #endif
 }
 
 void loop()
@@ -109,21 +106,25 @@ void loop()
   if ((millis() - lastMilli) >= LOOPTIME)
   {
     #ifdef Adafruit_BNO055_ENABLE
-      // Get linear acceleration data from seneor
-      imu::Vector<3> linearaccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-      // Get quatrnion data from sensor 
-      imu::Quaternion quat = bno.getQuat();
-      //position data   
-      pose_msg.transform.translation.x = linearaccel.x();
-      pose_msg.transform.translation.y = linearaccel.y();
-      pose_msg.transform.translation.z = linearaccel.z();
-      // orientation data
-      pose_msg.transform.rotation.x = quat.x();
-      pose_msg.transform.rotation.y = quat.y();
-      pose_msg.transform.rotation.z = quat.z(); 
-      pose_msg.transform.rotation.w = quat.w();
-      //pose_msg.header.stamp = nh.now();
-      pub_pose.publish(&pose_msg);
+        imu::Quaternion quat = bno.getQuat();
+    quat.normalize();
+    imu::Vector<3> linear = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+    imu::Vector<3> angular = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+    
+    imu_msg.header.stamp = nh.now();
+    imu_msg.header.frame_id = "base_imu";
+    imu_msg.orientation.x = quat.x();
+    imu_msg.orientation.y = quat.y();
+    imu_msg.orientation.z = quat.z();
+    imu_msg.orientation.w = quat.w();
+    imu_msg.angular_velocity.x = angular.x();
+    imu_msg.angular_velocity.y = angular.y();
+    imu_msg.angular_velocity.z = angular.z();
+    imu_msg.linear_acceleration.x = linear.x();
+    imu_msg.linear_acceleration.y = linear.y();
+    imu_msg.linear_acceleration.z = linear.z();
+    imu_pub.publish(&imu_msg);
+    delay(BNO055_SAMPLERATE_DELAY_MS);
     #endif
     nh.spinOnce();
   }
