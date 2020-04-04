@@ -10,7 +10,13 @@ The purpose of project is to develop UVC-light Disinfection Robot in a Hospital 
 
 
 # Usage
-WIP
+This code is currently tested and working with ROS Kinetic and [Ubuntu 16.04 LTS](https://downloads.ubiquityrobotics.com/pi.html)  on the Raspberry Pi 3B+.
+
+WIP 
+
+$$bash
+roslaunch ...
+$$
 
 # Simulation
 WIP
