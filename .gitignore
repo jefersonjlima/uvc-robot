@@ -1,0 +1,4 @@
+# output file or temp file
+*~
+*.pyc
+temp/
