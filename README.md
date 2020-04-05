@@ -15,7 +15,7 @@ This code is currently tested and working with ROS Kinetic and [Ubuntu 16.04 LTS
 WIP 
 
 ```bash
-roslaunch ...
+$ roslaunch uvcrobot uvcrobot.launch
 ```
 
 # Simulation
