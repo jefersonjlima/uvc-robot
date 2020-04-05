@@ -4,6 +4,3 @@
 [submodule "uvcrobot_hardware/pwm_motor/lib/Adafruit_Sensor"]
 	path = uvcrobot_hardware/pwm_motor/lib/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor.git
-[submodule "uvcrobot_hardware/pwm_motor/lib/TimerOne"]
-	path = uvcrobot_hardware/pwm_motor/lib/TimerOne
-	url = https://github.com/PaulStoffregen/TimerOne.git
