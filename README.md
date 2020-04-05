@@ -14,9 +14,9 @@ This code is currently tested and working with ROS Kinetic and [Ubuntu 16.04 LTS
 
 WIP 
 
-$$bash
+```bash
 roslaunch ...
-$$
+```
 
 # Simulation
 WIP
