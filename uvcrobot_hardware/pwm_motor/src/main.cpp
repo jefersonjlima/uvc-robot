@@ -30,8 +30,8 @@ const int PIN_R_IN3 = 26;
 const int PIN_R_IN4 = 29;
 const int PIN_R_PWM = 32;
 int reverse = 0;
-float throttle = 0; 
-float angle = 0; 
+float throttle = 0;
+float angle = 0;
 
 #ifdef Adafruit_BNO055_ENABLE
   Adafruit_BNO055 bno = Adafruit_BNO055(55, 0x29);
@@ -111,7 +111,7 @@ void loop()
     quat.normalize();
     imu::Vector<3> linear = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
     imu::Vector<3> angular = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-    
+
     imu_msg.header.stamp = nh.now();
     imu_msg.header.frame_id = "base_imu";
     imu_msg.orientation.x = quat.x();
