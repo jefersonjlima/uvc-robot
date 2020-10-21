@@ -3,7 +3,7 @@
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 // ros libraries
-#define USE_USBCON // arduino due parameter
+// #define USE_USBCON // arduino due parameter
 #include <ros.h>
 #include <ros/time.h>
 #include <sensor_msgs/Imu.h>
@@ -23,12 +23,13 @@
 unsigned long lastMilli = 0;
 
 //ARDUINO DUE PINS
-const int PIN_L_IN1 = 22;
-const int PIN_L_IN2 = 24;
-const int PIN_L_PWM = 30;
-const int PIN_R_IN3 = 26;
-const int PIN_R_IN4 = 29;
-const int PIN_R_PWM = 32;
+const int PIN_L_IN1 = 5;
+const int PIN_L_IN2 = 4;
+const int PIN_L_PWM = 7;
+const int PIN_R_IN3 = 3;
+const int PIN_R_IN4 = 2;
+const int PIN_R_PWM = 6;
+
 int reverse = 0;
 float throttle = 0;
 float angle = 0;
@@ -190,7 +191,7 @@ void Adafruit_BNO055_Details(void)
 void handle_cmd( const geometry_msgs::Twist& twist)
 {
   throttle = twist.linear.x; 
-  angle = twist.angular.z; 
+  angle = twist.angular.z;
 
   if (twist.linear.x <= 0)
     {
