@@ -8,6 +8,7 @@
 #include <ros/time.h>
 #include <sensor_msgs/Imu.h>
 #include <geometry_msgs/Twist.h>
+#include <std_msgs/String.h>
 
 // control
 #include "control.h"
@@ -48,8 +49,8 @@ ros::NodeHandle nh;
 sensor_msgs::Imu imu_msg;
 ros::Publisher imu_pub("uvcrobot/imu", &imu_msg);
 #endif
-void handle_cmd( const geometry_msgs::Twist& twist);
-ros::Subscriber<geometry_msgs::Twist> cmd_vel("uvcrobot/cmd_vel", handle_cmd);
+void MotorControl(const std_msgs::String& msg);
+ros::Subscriber<std_msgs::String> cmd_motor("/uvcrobot/cmd_motor", MotorControl);
 pid_controller pid_z;
 
 void ControlRightMotor(uint8_t dir, uint8_t pwn);
@@ -63,7 +64,7 @@ void setup()
   Serial.begin(115200);
   nh.getHardware()->setBaud(115200);
   nh.advertise(imu_pub);
-  nh.subscribe(cmd_vel);
+  nh.subscribe(cmd_motor);
 #ifdef DEBUG
   Serial.begin(9600);
   Serial.println("Orientation Sensor Test");
@@ -129,9 +130,9 @@ void loop()
 }
 
 //Control function - Right Motors
-void ControlRightMotor(uint8_t dir, uint8_t pwn)
+void ControlLeftMotor(uint8_t dir, uint8_t pwn)
 {
-  if (dir == FORWARD)
+  if (dir == REVERSE)
     {
       digitalWrite(PIN_L_IN1, HIGH);
       digitalWrite(PIN_L_IN2, LOW);
@@ -145,9 +146,9 @@ void ControlRightMotor(uint8_t dir, uint8_t pwn)
 }
 
 //Control function - Left Motors
-void ControlLeftMotor(uint8_t dir, uint8_t pwn)
+void ControlRightMotor(uint8_t dir, uint8_t pwn)
 {
-  if (dir == FORWARD)
+  if (dir == REVERSE)
     {
       digitalWrite(PIN_R_IN3, LOW);
       digitalWrite(PIN_R_IN4, HIGH);
@@ -188,19 +189,30 @@ void Adafruit_BNO055_Details(void)
 }
 #endif
 
-void handle_cmd( const geometry_msgs::Twist& twist)
+void MotorControl(const std_msgs::String& msg)
 {
-  throttle = twist.linear.x; 
-  angle = twist.angular.z;
-
-  if (twist.linear.x <= 0)
+  uint8_t throttle = 150;
+  
+  if (msg.data[0] == 'w') 
     {
-      ControlRightMotor(FORWARD, (uint8_t)abs(throttle));
-      ControlLeftMotor(FORWARD, (uint8_t)abs(throttle));
+      ControlRightMotor(FORWARD, throttle);
+      ControlLeftMotor(FORWARD,  throttle);
     }
-  else if (twist.linear.x > 0){
-    ControlRightMotor(REVERSE, (uint8_t)throttle);
-    ControlLeftMotor(REVERSE, (uint8_t)throttle);
+  else if (msg.data[0] == 'x'){
+    ControlRightMotor(REVERSE, throttle);
+    ControlLeftMotor(REVERSE,  throttle);
+  }
+  else if (msg.data[0] == 'a'){
+    ControlRightMotor(FORWARD, throttle);
+    ControlLeftMotor(REVERSE,  throttle);
+  }
+  else if (msg.data[0] == 'd'){
+    ControlRightMotor(REVERSE, throttle);
+    ControlLeftMotor(FORWARD,  throttle);
+  }
+  else if (msg.data[0] == 's'){
+    ControlRightMotor(FORWARD, 0);
+    ControlLeftMotor(FORWARD,  0);
   }
 
 #ifdef DEBUG
