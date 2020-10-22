@@ -191,24 +191,24 @@ void Adafruit_BNO055_Details(void)
 
 void MotorControl(const std_msgs::String& msg)
 {
-  uint8_t throttle = 150;
+  // uint8_t throttle = 150;
   
   if (msg.data[0] == 'w') 
     {
-      ControlRightMotor(FORWARD, throttle);
-      ControlLeftMotor(FORWARD,  throttle);
+      ControlRightMotor(FORWARD, 150);
+      ControlLeftMotor(FORWARD,  150);
     }
   else if (msg.data[0] == 'x'){
-    ControlRightMotor(REVERSE, throttle);
-    ControlLeftMotor(REVERSE,  throttle);
+    ControlRightMotor(REVERSE, 150);
+    ControlLeftMotor(REVERSE,  150);
   }
   else if (msg.data[0] == 'a'){
-    ControlRightMotor(FORWARD, throttle);
-    ControlLeftMotor(REVERSE,  throttle);
+    ControlRightMotor(FORWARD, 200);
+    ControlLeftMotor(REVERSE,  50);
   }
   else if (msg.data[0] == 'd'){
-    ControlRightMotor(REVERSE, throttle);
-    ControlLeftMotor(FORWARD,  throttle);
+    ControlRightMotor(REVERSE, 50);
+    ControlLeftMotor(FORWARD,  200);
   }
   else if (msg.data[0] == 's'){
     ControlRightMotor(FORWARD, 0);
