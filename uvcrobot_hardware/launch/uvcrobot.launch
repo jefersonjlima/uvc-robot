@@ -5,4 +5,8 @@
     <param name="port" value="/dev/ttyACM0"/>
     <param name="baud" value="115200"/>
   </node>
+  <include file="$(find ros_deep_learning)/launch/detectnet.ros1.launch">
+    <param name="input" value="csi://0"/>
+    <param name="port"  value="csi://0"/>
+  </include>
 </launch>
