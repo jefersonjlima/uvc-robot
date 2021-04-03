@@ -13,6 +13,13 @@ The purpose of project is to develop UVC-light Disinfection Robot in a Hospital 
 
 First, install the latest version of JetPack on your Jetson.
 
+Next, clone the uvc-robot
+
+    $ mkdir -p ~/catkin_ws/src
+    $ cd ~/catkin_ws/src
+    $ git clone --recurse-submodules https://gitlab.com/jeferson.lima/uvc_robot.git
+
+
 ## jetson-inference
 These ROS nodes use the DNN objects from the jetson-inference project (aka Hello AI World). To build and install jetson-inference, see this page or run the commands below:
 
