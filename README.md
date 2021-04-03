@@ -13,17 +13,10 @@ The purpose of project is to develop UVC-light Disinfection Robot in a Hospital 
 
 First, install the latest version of JetPack on your Jetson.
 
-Next, clone the uvc-robot
-
-    $ mkdir -p ~/catkin_ws/src
-    $ cd ~/catkin_ws/src
-    $ git clone --recurse-submodules https://gitlab.com/jeferson.lima/uvc_robot.git
-
 
 ## jetson-inference
 These ROS nodes use the DNN objects from the jetson-inference project (aka Hello AI World). To build and install jetson-inference, see this page or run the commands below:
 
-    $ mkdir ~/Libraries
     $ cd ~/Libraries
     $ git clone --recursive https://github.com/dusty-nv/jetson-inference
     $ cd ~/Libraries/jetson-inference
@@ -42,8 +35,16 @@ Install the `ros-melodic-ros-base`:
 
 Next install:
 
-    $$ sudo apt-get install ros-melodic-image-transport ros-melodic-vision-msgs ros-melodic-rosserial-python
+    $$ sudo apt-get install ros-melodic-image-transport ros-melodic-vision-msgs
 
+Install ROSSerial package
+
+    $ cd ~/catkin_ws/src
+    git clone https://github.com/ros-drivers/rosserial.git 
+    $ cd rosserial
+    $ git checkout melodic-devel
+
+The branch melodic-devel will fix [bug](https://answers.ros.org/question/264764/rosserial-arduino-due-sync-issues/) Arduino DUE and ROSSerial.
 
 navigate to rules.d directory
 
@@ -60,7 +61,7 @@ Next, navigate into your catkin_ws/src directory and clone ros_deep_learning:
     $ git clone https://github.com/dusty-nv/ros_deep_learning
 
 # Usage
-This code is currently tested and working with ROS Melodic and [Ubuntu 18.04 LTS](https://downloads.ubiquityrobotics.com/pi.html)  on the Jetson Nano.
+This code is currently tested and working with ROS Melodic and [JetPack 4.5.1](https://developer.nvidia.com/embedded/jetpack) on the Jetson Nano.
 
 WIP 
 

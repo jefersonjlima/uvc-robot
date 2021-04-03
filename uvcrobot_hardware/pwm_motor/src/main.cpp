@@ -3,7 +3,7 @@
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 // ros libraries
-// #define USE_USBCON // arduino due parameter
+#define USE_USBCON // arduino due parameter
 #include <ros.h>
 #include <ros/time.h>
 #include <sensor_msgs/Imu.h>
