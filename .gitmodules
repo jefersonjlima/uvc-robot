@@ -4,15 +4,3 @@
 [submodule "uvcrobot_hardware/pwm_motor/lib/Adafruit_Sensor"]
 	path = uvcrobot_hardware/pwm_motor/lib/Adafruit_Sensor
 	url = https://github.com/adafruit/Adafruit_Sensor.git
-[submodule "ros_deep_learning"]
-	path = extras/ros_deep_learning
-	url = https://github.com/dusty-nv/ros_deep_learning
-[submodule "jetbot_ros"]
-	path = extras/jetbot_ros
-	url = https://github.com/dusty-nv/jetbot_ros
-[submodule "rosserial"]
-	path = extras/rosserial
-	url = https://github.com/ros-drivers/rosserial.git
-[submodule "jetson-inference"]
-	path = extras/jetson-inference
-	url = https://github.com/dusty-nv/jetson-inference
